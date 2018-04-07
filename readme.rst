@@ -13,6 +13,7 @@ Command Line
 ------------
 
 Simple example:
+
 `cmpa <first_directory> <second_directory>`
 
 Use `cmpa -h` for a complete list of options.
@@ -23,6 +24,7 @@ Python library package
 Simple example:
 
 .. code:: python
+
 from cmpa import compare, Compare
 
 # Just compare directory with itself.
