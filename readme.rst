@@ -14,7 +14,7 @@ Command Line
 
 Simple example:
 
-`cmpa <first_directory> <second_directory>`
+    `cmpa <first_directory> <second_directory>`
 
 Use `cmpa -h` for a complete list of options.
 
@@ -28,12 +28,10 @@ Simple example:
     from cmpa import compare, Compare
 
     # Just compare directory with itself.
-
     compare(['.', '.'])
     print()
 
     # Use the class for finer grain observability
-
     c = Compare(['.', '.'], silent=True)
     print(c.get_total_files())
     print(c.get_file_counts())
