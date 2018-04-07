@@ -1,0 +1,2 @@
+
+- add an image based comparison where it also provides the 'diffs' for things like PDFs, .PNGs, etc.
