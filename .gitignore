@@ -160,3 +160,4 @@ fabric.properties
 .idea/
 test_cmpa/data/
 .pytest_cache/
+temp.*
