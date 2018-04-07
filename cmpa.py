@@ -43,7 +43,7 @@ def main():
         print(__version__)
 
     cd = CompareDirectories(args.directories, args.filters, args.silent, args.text, args.exclude, args.verbose)
-    sys.exit(int(not cd.compare_ok))  # 0 is all compared OK, 1 otherwise
+    sys.exit(int(not cd.compare_ok_all))  # 0 is all compared OK, 1 otherwise
 
 
 if __name__ == '__main__':

@@ -40,7 +40,7 @@ class CompareDirectories:
         log.info('comparing : %s' % self.directories)
         log.info('filters : %s' % self.file_filters)
 
-        self.compare_ok = True
+        self.compare_ok_all = True
         self.compare_ok_count = 0
 
         for dir_index, directory in enumerate(self.directories):
@@ -59,30 +59,29 @@ class CompareDirectories:
             log.info('%d files in "%s"' % (len(self.file_sets[dir_index]), directory))
             diff = self.file_sets[dir_index % 2] - self.file_sets[(dir_index + 1) % 2]
             for file_path in diff:
-                self.compare_ok = False
+                self.compare_ok_all = False
                 _cmpa_print('%s,"%s"' % (diff_type_character[dir_index], file_path), not self.silent)
 
         for partial_path in self.file_sets[0].intersection(self.file_sets[1]):
+            compare_ok = True
             path_a = os.path.join(self.directories[0], partial_path)
             path_b = os.path.join(self.directories[1], partial_path)
-            if filecmp.cmp(path_a, path_b):
+            if filecmp.cmp(path_a, path_b) or (self.text_mode and _text_compare(path_a, path_b)):
                 self.compare_ok_count += 1
             else:
-                if self.text_mode:
-                    self.compare_ok = _text_compare(path_a, path_b)
-                else:
-                    self.compare_ok = False
-            if self.compare_ok:
+                compare_ok = False
+            if compare_ok:
                 _cmpa_print('=,"%s","%s"' % (path_a, path_b), self.verbose)
             else:
                 # ! for contents not equal
                 _cmpa_print('!,"%s","%s"' % (path_a, path_b), not self.silent)
+                self.compare_ok_all = False
 
         if not self.silent:
             print('f,%d,%d' % (self.get_total_files(), self.compare_ok_count))
 
-        # '='=equality - False if any differences, True otherwise
-        _cmpa_print('s,%s' % self.compare_ok, not self.silent)
+        # 's'=summary - False if any differences, True otherwise
+        _cmpa_print('s,%s' % self.compare_ok_all, not self.silent)
 
     def get_total_files(self):
         return len(set.union(*[fs for fs in self.file_sets.values()]))
@@ -93,4 +92,4 @@ class CompareDirectories:
 
 def compare_directories(directories, file_filters=['*'], silent=False, text_mode=False, excludes=[], verbose=False):
     cd = CompareDirectories(directories, file_filters, silent, text_mode, excludes, verbose)
-    return cd.compare_ok
+    return cd.compare_ok_all

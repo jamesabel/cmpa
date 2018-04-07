@@ -26,12 +26,12 @@ def test_cmpa():
 
     cd = CompareDirectories([os.path.join(get_test_data_root_same_single_level(), test_dir) for test_dir in test_dirs])
     assert(cd.compare_ok_count == 1)
-    assert(cd.compare_ok is True)
+    assert(cd.compare_ok_all is True)
     assert(cd.get_file_counts() == [1, 1])
     assert(cd.get_total_files() == 1)
 
     cd = CompareDirectories([os.path.join(get_test_data_root_same_multiple_level(), test_dir) for test_dir in test_dirs])
     assert(cd.compare_ok_count == 3)
-    assert(cd.compare_ok is True)
+    assert(cd.compare_ok_all is True)
     assert(cd.get_file_counts() == [3, 3])
     assert(cd.get_total_files() == 3)
