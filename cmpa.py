@@ -3,7 +3,7 @@ import argparse
 import logging
 import sys
 
-from cmpa import CompareDirectories, __version__
+from cmpa import Compare, __version__
 
 log = logging.getLogger()
 
@@ -42,7 +42,7 @@ def main():
     if args.version:
         print(__version__)
 
-    cd = CompareDirectories(args.directories, args.filters, args.silent, args.text, args.exclude, args.verbose)
+    cd = Compare(args.directories, args.filters, args.silent, args.text, args.exclude, args.verbose)
     sys.exit(int(not cd.compare_ok_all))  # 0 is all compared OK, 1 otherwise
 
 

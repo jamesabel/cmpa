@@ -8,7 +8,7 @@ with open('index.rst', encoding='utf-8') as f:
 
 setup(
     name=__title__,
-    description='Directory comparison utility',
+    description='Comparison utility',
     long_description=long_description,
     version=__version__,
     author=__author__,
@@ -16,7 +16,7 @@ setup(
     license='MIT License',
     url=__url__,
     download_url=__download_url__,
-    keywords=['directory', 'comparison', 'utility'],
+    keywords=['directory', 'file', 'comparison', 'utility'],
     packages=[__title__],
     package_data={'': ['index.rst']},
     install_requires=[],

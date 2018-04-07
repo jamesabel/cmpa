@@ -26,7 +26,7 @@ def _text_compare(file_path_a, file_path_b):
     return lines[0] == lines[1]
 
 
-class CompareDirectories:
+class Compare:
     def __init__(self, directories, file_filters=['*'], silent=False, text_mode=False, excludes=[], verbose=False):
         self.directories = directories
         self.file_filters = file_filters
@@ -90,6 +90,6 @@ class CompareDirectories:
         return [len(fs) for fs in self.file_sets.values()]
 
 
-def compare_directories(directories, file_filters=['*'], silent=False, text_mode=False, excludes=[], verbose=False):
-    cd = CompareDirectories(directories, file_filters, silent, text_mode, excludes, verbose)
+def compare(directories, file_filters=['*'], silent=False, text_mode=False, excludes=[], verbose=False):
+    cd = Compare(directories, file_filters, silent, text_mode, excludes, verbose)
     return cd.compare_ok_all

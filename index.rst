@@ -1,9 +1,8 @@
 
-dircmpa (Directory Comparison)
-==============================
+cmpa (Comparison utility)
+=========================
 
 Compares the contents of two directories (folders) and reports if they are equal or not.
-If they are not equal, how the are not equal.
 
 Usage
 =====
@@ -13,13 +12,26 @@ dircmpa can be used either as a command line application or as a Python library 
 Command Line
 ------------
 
-dircmpa <directory> <directory> [-s/--silent] [-v/--verbose]
+Simple example:
+`cmpa <first_directory> <second_directory>`
 
+Use `cmpa -h` for a complete list of options.
 
 Python library package
 ----------------------
 
-.. code:: python
-from dircmpa import compare_folders
+Simple example:
 
-compare_folders('a', 'b')
+.. code:: python
+from cmpa import compare, Compare
+
+# Just compare directory with itself.
+compare(['.', '.'])
+print()
+
+# Use the class for finer grain observability
+c = Compare(['.', '.'], silent=True)
+print(c.get_total_files())
+print(c.get_file_counts())
+print(c.compare_ok_count)
+

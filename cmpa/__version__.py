@@ -1,9 +1,9 @@
 
 __title__ = 'cmpa'
-__description__ = 'Directory Compare'
+__description__ = 'Comparison utility'
 __url__ = 'https://github.com/jamesabel/cmpa'
 __download_url__ = 'https://github.com/jamesabel/cmpa/archive/master.zip'
-__version__ = '0.0.1'
+__version__ = '0.0.2'
 __author__ = 'James Abel'
 __author_email__ = 'j@abel.co'
 __license__ = 'MIT'
