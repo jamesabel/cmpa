@@ -3,6 +3,7 @@ import os
 import filecmp
 from glob import glob
 import logging
+import difflib
 
 log = logging.getLogger()
 
@@ -13,9 +14,15 @@ def _cmpa_print(print_string, output_flag):
         print(print_string)
 
 
-def _text_compare(file_path_a, file_path_b):
+def _text_compare(left_file_path, right_file_path, print_diffs):
+    """
+    do a text comparison of two files, ignoring CR/LF differences
+    :param left_file_path: path to the 'left' file
+    :param right_file_path: path to the 'right' file
+    :return: True if files have the same textual contents, False if they are not
+    """
     lines = {}
-    for path_number, file_path in enumerate([file_path_a, file_path_b]):
+    for path_number, file_path in enumerate([left_file_path, right_file_path]):
         file_lines = []
         with open(file_path) as f:
             for line in f.readlines():
@@ -23,7 +30,10 @@ def _text_compare(file_path_a, file_path_b):
                 if len(line) > 0:
                     file_lines.append(line)
         lines[path_number] = file_lines
-    return lines[0] == lines[1]
+    are_equal = (lines[0] == lines[1])
+    if not are_equal and print_diffs:
+        print(''.join(difflib.context_diff(lines[0], lines[1], fromfile=left_file_path, tofile=right_file_path)))
+    return are_equal
 
 
 class Compare:
@@ -63,14 +73,10 @@ class Compare:
                 _cmpa_print('%s,"%s"' % (diff_type_character[dir_index], file_path), not self.silent)
 
         for partial_path in self.file_sets[0].intersection(self.file_sets[1]):
-            compare_ok = True
             path_a = os.path.join(self.directories[0], partial_path)
             path_b = os.path.join(self.directories[1], partial_path)
-            if filecmp.cmp(path_a, path_b) or (self.text_mode and _text_compare(path_a, path_b)):
+            if filecmp.cmp(path_a, path_b) or (self.text_mode and _text_compare(path_a, path_b, self.verbose)):
                 self.compare_ok_count += 1
-            else:
-                compare_ok = False
-            if compare_ok:
                 _cmpa_print('=,"%s","%s"' % (path_a, path_b), self.verbose)
             else:
                 # ! for contents not equal
@@ -87,6 +93,10 @@ class Compare:
         return len(set.union(*[fs for fs in self.file_sets.values()]))
 
     def get_file_counts(self):
+        """
+        get the file counts of each of the directories as a 2-valued list
+        :return: a 2 values list of file counts
+        """
         return [len(fs) for fs in self.file_sets.values()]
 
 
