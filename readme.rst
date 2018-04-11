@@ -7,14 +7,14 @@ Compares the contents of two directories (folders) and reports if they are equal
 Usage
 =====
 
-dircmpa can be used either as a command line application or as a Python library package.
+cmpa can be used either as a command line application or as a Python library package.
 
 Command Line
 ------------
 
 Simple example:
 
-    `cmpa <first_directory> <second_directory>`
+    `cmpa <left_directory> <right_directory>`
 
 Use `cmpa -h` for a complete list of options.
 
@@ -27,7 +27,7 @@ Simple example:
 
     from cmpa import compare, Compare
 
-    # Just compare directory with itself.
+    # For this simple example just compare directory with itself.
     compare(['.', '.'])
     print()
 
