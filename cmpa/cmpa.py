@@ -2,10 +2,13 @@
 import os
 import filecmp
 from glob import glob
-import logging
 import difflib
 
-log = logging.getLogger()
+from cmpa import __title__
+
+from balsa import get_logger
+
+log = get_logger(__title__)
 
 
 def _cmpa_print(print_string, output_flag):

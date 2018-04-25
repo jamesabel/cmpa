@@ -1,11 +1,14 @@
 
 import argparse
-import logging
 import sys
 
-from cmpa import Compare, __version__
+from cmpa import __title__
 
-log = logging.getLogger()
+from balsa import get_logger, Balsa
+
+from cmpa import Compare, __version__, __author__
+
+log = get_logger(__title__)
 
 
 def main():
@@ -36,8 +39,8 @@ def main():
     parser.add_argument('-v', '--verbose', action='store_true', help='verbose')
     args = parser.parse_args()
 
-    console_logger = logging.StreamHandler()
-    log.addHandler(console_logger)
+    balsa = Balsa(__title__, __author__)
+    balsa.init_logger_from_args(args)
 
     if args.version:
         print(__version__)
